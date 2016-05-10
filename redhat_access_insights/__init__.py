@@ -40,6 +40,7 @@ from containers import (open_image,
                         run_in_container,
                         insights_client_container_is_available)
 from client_config import InsightsClient, set_up_options, parse_config_file
+from maintenance_plan import display_plans
 
 __author__ = 'Jeremy Crafts <jcrafts@redhat.com>, Dan Varga <dvarga@redhat.com>'
 
@@ -155,6 +156,11 @@ def handle_startup():
     if InsightsClient.options.support:
         support = InsightsSupport()
         support.collect_support_info()
+        sys.exit()
+
+    if InsightsClient.options.maintenance_plan:
+        logger.info('Fetching maintenance plans...')
+        display_plans()
         sys.exit()
 
     # ----config options----
